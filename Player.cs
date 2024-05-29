@@ -20,7 +20,11 @@ public partial class Player : CharacterBody3D
 	private void MoveCharacter(double delta)
 	{
 		var direction = GetInputDirection();
-		GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
+		if (direction != Vector3.Zero)
+		{
+			direction = direction.Normalized();
+			GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
+		}
 
 		// Ground velocity
 		_targetVelocity.X = direction.X * Speed;
@@ -57,10 +61,6 @@ public partial class Player : CharacterBody3D
 			direction.Z -= 1.0f;
 		}
 
-		if (direction != Vector3.Zero)
-		{
-			direction = direction.Normalized();
-		}
 
 		return direction;
 	}
