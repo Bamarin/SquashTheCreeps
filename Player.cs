@@ -4,17 +4,17 @@ public partial class Player : CharacterBody3D
 {
 	// How fast the player moves in meters per second.
 	[Export]
-	public int Speed { get; set; } = 14;
+	public int Speed { get; set; } = 14; // m/s
 	// The downward acceleration when in the air, in meters per second squared.
 	[Export]
-	public int FallAcceleration { get; set; } = 75;
+	public int FallAcceleration { get; set; } = 75; // m/s^2
+	public int JumpImpulse {get;set;} = 20; // m/s
 
 	private Vector3 _targetVelocity = Vector3.Zero;
 
 	public override void _PhysicsProcess(double delta)
 	{
 		MoveCharacter(delta);
-
 	}
 
 	private void MoveCharacter(double delta)
@@ -34,6 +34,12 @@ public partial class Player : CharacterBody3D
 		if (!IsOnFloor())
 		{
 			_targetVelocity.Y -= FallAcceleration * (float)delta;
+		}
+
+		// Jumping
+		if(IsOnFloor() && Input.IsActionJustPressed("jump"))
+		{
+			_targetVelocity.Y = JumpImpulse;
 		}
 
 		Velocity = _targetVelocity;
