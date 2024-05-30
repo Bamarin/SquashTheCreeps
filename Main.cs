@@ -7,8 +7,6 @@ public partial class Main : Node
 
 	private void OnMobTimerTimeout()
 	{
-		GD.Print("spawn");
-
 		// Create a new instance of the Mob scene.
 		Mob mob = MobScene.Instantiate<Mob>();
 

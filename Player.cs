@@ -8,13 +8,34 @@ public partial class Player : CharacterBody3D
 	// The downward acceleration when in the air, in meters per second squared.
 	[Export]
 	public int FallAcceleration { get; set; } = 75; // m/s^2
+	[Export]
 	public int JumpImpulse {get;set;} = 20; // m/s
+	public int BounceImpulse {get;set;} = 16; // m/s
 
 	private Vector3 _targetVelocity = Vector3.Zero;
 
 	public override void _PhysicsProcess(double delta)
 	{
 		MoveCharacter(delta);
+
+		// Iterate through all collisions that occurred this frame.
+		for (int index = 0; index < GetSlideCollisionCount(); index++)
+		{
+			KinematicCollision3D collision = GetSlideCollision(index);
+
+			// if the player collided with a mob
+			if(collision.GetCollider() is Mob mob)
+			{
+				// if the collision happened above the mob (player jumped on it)
+				if(Vector3.Up.Dot(collision.GetNormal()) > 0.1f)
+				{
+					mob.Squash();
+					_targetVelocity.Y = BounceImpulse;
+					// don't check for any more collisions to prevent duplicate calls;
+					break;
+				}
+			}
+		}
 	}
 
 	private void MoveCharacter(double delta)

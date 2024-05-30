@@ -51,6 +51,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19.0772)
 projection = 1
 size = 19.0
+far = 1000.0
 
 [node name="Cylinders" type="Node3D" parent="."]
 

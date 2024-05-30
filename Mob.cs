@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Mob : CharacterBody3D
@@ -6,6 +7,8 @@ public partial class Mob : CharacterBody3D
 	public int MinSpeed { get; set; } = 10; // m/s
 	[Export]
 	public int MaxSpeed { get; set; } = 18; // m/s
+	[Signal]
+	public delegate void SquashedEventHandler();
 
 	public void Initialize(Vector3 startPosition, Vector3 playerPosition)
 	{
@@ -22,6 +25,12 @@ public partial class Mob : CharacterBody3D
 	public override void _PhysicsProcess(double delta)
 	{
 		MoveAndSlide();
+	}
+
+	internal void Squash()
+	{
+		EmitSignal(SignalName.Squashed);
+		QueueFree();
 	}
 
 	private void OnVisiblityNotifierScreenExited()
