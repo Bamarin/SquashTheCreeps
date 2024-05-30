@@ -4,3 +4,4 @@ res://main.tscn
 res://mob.tscn
 res://Main.cs
 res://Mob.cs
+res://ScoreLabel.cs

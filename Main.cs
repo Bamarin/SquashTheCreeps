@@ -18,6 +18,8 @@ public partial class Main : Node
 		Vector3 playerPosition = GetNode<Player>("Player").Position;
 		mob.Initialize(mobSpawnLocation.Position, playerPosition);
 
+		mob.Squashed += GetNode<ScoreLabel>("UserInterface/ScoreLabel").OnMobSquoshed;
+
 		// Spawn the mob by adding it to the Main scene.
 		AddChild(mob);
 	}
