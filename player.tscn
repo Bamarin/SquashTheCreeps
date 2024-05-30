@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdn051cn7i2rb"]
+[gd_scene load_steps=5 format=3 uid="uid://cdn051cn7i2rb"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_1lid1"]
 [ext_resource type="PackedScene" uid="uid://ddsl38c1k75ap" path="res://art/player.glb" id="1_skp6q"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5vlto"]
+radius = 0.8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g77hk"]
+height = 0.2
 radius = 1.0
 
 [node name="Player" type="CharacterBody3D"]
@@ -16,5 +20,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4417, 0)
 [node name="Character" parent="Pivot" instance=ExtResource("1_skp6q")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("SphereShape3D_5vlto")
+
+[node name="MobDetector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851462, 0)
+shape = SubResource("CylinderShape3D_g77hk")
+
+[connection signal="body_entered" from="MobDetector" to="." method="OnMobDetectorBodyEntered"]

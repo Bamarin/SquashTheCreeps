@@ -21,4 +21,9 @@ public partial class Main : Node
 		// Spawn the mob by adding it to the Main scene.
 		AddChild(mob);
 	}
+
+	private void OnPlayerHit()
+	{
+		GetNode<Timer>("MobTimer").Stop();
+	}
 }

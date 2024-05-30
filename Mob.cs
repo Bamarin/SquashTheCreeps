@@ -1,14 +1,14 @@
-using System;
 using Godot;
 
 public partial class Mob : CharacterBody3D
 {
+	[Signal]
+	public delegate void SquashedEventHandler();
+
 	[Export]
 	public int MinSpeed { get; set; } = 10; // m/s
 	[Export]
 	public int MaxSpeed { get; set; } = 18; // m/s
-	[Signal]
-	public delegate void SquashedEventHandler();
 
 	public void Initialize(Vector3 startPosition, Vector3 playerPosition)
 	{
@@ -30,7 +30,7 @@ public partial class Mob : CharacterBody3D
 	internal void Squash()
 	{
 		EmitSignal(SignalName.Squashed);
-		QueueFree();
+		QueueFree(); // Destroy this node.
 	}
 
 	private void OnVisiblityNotifierScreenExited()
